@@ -92,24 +92,37 @@
         }
 
         function renderNews(articles) {
-            // Hero
-            const hero = articles[0].attributes;
+            // Helper para lidar com Strapi 4 (attributes) e Strapi 5 (flat)
+            const getFields = (item) => item.attributes || item;
+
+            // Hero (Destaque)
+            const firstArticle = articles[0];
+            const hero = getFields(firstArticle);
+            
             document.getElementById('hero-title').innerText = hero.title || "Sem Título";
             
             const heroBody = hero.excerpt || parseContent(hero.content) || "Sem descrição disponível.";
             document.getElementById('hero-excerpt').innerText = heroBody;
             
-            if (hero.cover?.data) {
-                const imgUrl = `${STRAPI_URL}${hero.cover.data.attributes.url}`;
+            // Capa do Hero
+            const heroCover = hero.cover?.data ? getFields(hero.cover.data) : (hero.cover || null);
+            if (heroCover && heroCover.url) {
+                const imgUrl = heroCover.url.startsWith('http') ? heroCover.url : `${STRAPI_URL}${heroCover.url}`;
                 document.getElementById('hero-image').innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover" />`;
             }
 
             // Grid
             const grid = document.getElementById('news-grid');
             grid.innerHTML = articles.map(article => {
-                const attr = article.attributes;
-                const imgUrl = attr.cover?.data ? `${STRAPI_URL}${attr.cover.data.attributes.url}` : 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400';
-                const body = attr.excerpt || parseContent(attr.content) || "";
+                const fields = getFields(article);
+                
+                // Tratar imagem de capa do card
+                const cover = fields.cover?.data ? getFields(fields.cover.data) : (fields.cover || null);
+                const imgUrl = cover && cover.url 
+                    ? (cover.url.startsWith('http') ? cover.url : `${STRAPI_URL}${cover.url}`) 
+                    : 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400';
+                
+                const body = fields.excerpt || parseContent(fields.content) || "";
 
                 return `
                     <article class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-[#ffb400] transition-all group">
@@ -117,11 +130,11 @@
                             <img src="${imgUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                         </div>
                         <div class="p-6">
-                            <h4 class="text-xl font-bold mt-2 group-hover:text-[#ffb400] transition-colors">${attr.title || "Nova Notícia"}</h4>
+                            <h4 class="text-xl font-bold mt-2 group-hover:text-[#ffb400] transition-colors">${fields.title || "Nova Notícia"}</h4>
                             <p class="text-gray-400 text-sm mt-3 line-clamp-3">${body}</p>
                             <div class="mt-6 pt-6 border-t border-gray-800 flex items-center justify-between text-xs text-gray-500">
                                 <span>WebTech News</span>
-                                <span>${new Date(attr.createdAt).toLocaleDateString()}</span>
+                                <span>${new Date(fields.createdAt || Date.now()).toLocaleDateString()}</span>
                             </div>
                         </div>
                     </article>
