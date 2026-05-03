@@ -3,184 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebTech | Strapi Consumer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>WebTech News Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #6366f1;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #818cf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        #content {
-            display: grid;
-            gap: 20px;
-        }
-
-        .card {
-            background-color: var(--surface);
-            border: 1px border var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
-
-        .card h2 {
-            font-size: 1.25rem;
-            margin-bottom: 8px;
-            color: var(--text);
-        }
-
-        .card .meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            gap: 12px;
-        }
-
-        .badge {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            font-weight: 500;
-            letter-spacing: 2px;
-        }
-
-        .error {
-            background: rgba(ef, 44, 44, 0.1);
-            color: #f87171;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(ef, 44, 44, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        footer {
-            margin-top: 80px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; color: white; }
+        .webtech-gradient { background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%); }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="badge" style="margin-bottom: 12px;">Live from Strapi</div>
-            <h1>Portal de Conteúdo</h1>
-            <p class="subtitle">Consumindo dados dinâmicos via API local</p>
-        </header>
-
-        <div id="content">
-            <div class="loading">SINCROZINANDO COM STRAPI...</div>
+<body class="min-h-screen">
+    <!-- Navbar -->
+    <nav class="border-b border-gray-800 bg-gray-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 webtech-gradient rounded-lg flex items-center justify-center font-bold text-black">W</div>
+                <h1 class="text-xl font-bold tracking-tight">WebTech <span class="text-[#ffb400]">News</span></h1>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-gray-400">
+                <a href="#" class="hover:text-[#ffb400] transition-colors">Tecnologia</a>
+                <a href="#" class="hover:text-[#ffb400] transition-colors">Desenvolvimento</a>
+                <a href="#" class="hover:text-[#ffb400] transition-colors">Infraestrutura</a>
+            </div>
         </div>
+    </nav>
 
-        <footer>
-            Deploy via WebTech Network Dashboard
-        </footer>
-    </div>
+    <!-- Hero Section -->
+    <header class="max-w-7xl mx-auto px-4 py-12">
+        <div class="webtech-gradient p-1 rounded-2xl">
+            <div class="bg-gray-900 rounded-[14px] p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1">
+                    <span class="text-[#ffb400] text-sm font-bold uppercase tracking-widest">Destaque</span>
+                    <h2 id="hero-title" class="text-3xl md:text-5xl font-extrabold mt-4 leading-tight">Conectando ao Strapi...</h2>
+                    <p id="hero-excerpt" class="text-gray-400 mt-6 text-lg">Seus artigos aparecerão aqui assim que você cadastrá-los e publicá-los no Strapi.</p>
+                </div>
+                <div id="hero-image" class="w-full md:w-1/2 aspect-video bg-gray-800 rounded-xl overflow-hidden flex items-center justify-center text-gray-600">
+                    <span class="material-symbols-outlined text-5xl">image</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- News Grid -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+            <span class="w-2 h-8 webtech-gradient rounded-full"></span>
+            Últimas Notícias
+        </h3>
+        <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Os cards entrarão aqui -->
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800 py-12 mt-12 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 WebTech Network. Integrado via API.</p>
+    </footer>
 
     <script>
         const STRAPI_URL = 'http://localhost:1337';
 
-        async function fetchContent() {
+        async function fetchNews() {
             try {
-                const response = await fetch(`${STRAPI_URL}/api/articles`);
-                if (!response.ok) throw new Error('Falha na conexão');
-                
+                const response = await fetch(`${STRAPI_URL}/api/articles?populate=*`);
                 const { data } = await response.json();
-                const container = document.getElementById('content');
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="error">Nenhum artigo encontrado. Crie um post no Strapi!</div>';
-                    return;
+                
+                if (data && data.length > 0) {
+                    renderNews(data);
+                } else {
+                    document.getElementById('hero-title').innerText = "Aguardando Notícias...";
+                    document.getElementById('hero-excerpt').innerText = "Vá ao Strapi (localhost:1337) e publique seu primeiro Artigo.";
                 }
-
-                container.innerHTML = data.map((item, index) => `
-                    <div class="card" style="animation-delay: ${index * 0.1}s">
-                        <h2>${item.title}</h2>
-                        <div class="meta">
-                            <span>ID: ${item.documentId.slice(0,8)}</span>
-                            <span>Publicado em: ${new Date(item.createdAt).toLocaleDateString('pt-BR')}</span>
-                        </div>
-                    </div>
-                `).join('');
-
             } catch (error) {
-                document.getElementById('content').innerHTML = `
-                    <div class="error">
-                        <strong>Erro de Conexão</strong><br>
-                        Certifique-se que o Strapi está rodando e as permissões Públicas estão liberadas.
-                    </div>
-                `;
+                console.error('Erro:', error);
+                document.getElementById('hero-title').innerText = "Servidor Offline";
+                document.getElementById('hero-excerpt').innerText = "Certifique-se que o Strapi está rodando em localhost:1337.";
             }
         }
 
-        fetchContent();
+        function renderNews(articles) {
+            // Hero
+            const hero = articles[0].attributes;
+            document.getElementById('hero-title').innerText = hero.title || "Sem Título";
+            document.getElementById('hero-excerpt').innerText = hero.excerpt || hero.content || "Sem descrição disponível.";
+            
+            if (hero.cover?.data) {
+                const imgUrl = `${STRAPI_URL}${hero.cover.data.attributes.url}`;
+                document.getElementById('hero-image').innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover" />`;
+            }
+
+            // Grid
+            const grid = document.getElementById('news-grid');
+            grid.innerHTML = articles.map(article => {
+                const attr = article.attributes;
+                const imgUrl = attr.cover?.data ? `${STRAPI_URL}${attr.cover.data.attributes.url}` : 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400';
+                
+                return `
+                    <article class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-[#ffb400] transition-all group">
+                        <div class="aspect-video overflow-hidden">
+                            <img src="${imgUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold mt-2 group-hover:text-[#ffb400] transition-colors">${attr.title || "Nova Notícia"}</h4>
+                            <p class="text-gray-400 text-sm mt-3 line-clamp-3">${attr.excerpt || attr.content || ""}</p>
+                            <div class="mt-6 pt-6 border-t border-gray-800 flex items-center justify-between text-xs text-gray-500">
+                                <span>WebTech News</span>
+                                <span>${new Date(attr.createdAt).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        fetchNews();
     </script>
 </body>
 </html>
