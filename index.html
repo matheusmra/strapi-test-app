@@ -79,11 +79,25 @@
             }
         }
 
+        function parseContent(content) {
+            if (!content) return "";
+            // Se for o novo editor de Blocos (JSON/Array)
+            if (Array.isArray(content)) {
+                return content
+                    .map(block => block.children ? block.children.map(c => c.text).join('') : '')
+                    .join(' ');
+            }
+            // Se for String (Rich Text/Markdown)
+            return content;
+        }
+
         function renderNews(articles) {
             // Hero
             const hero = articles[0].attributes;
             document.getElementById('hero-title').innerText = hero.title || "Sem Título";
-            document.getElementById('hero-excerpt').innerText = hero.excerpt || hero.content || "Sem descrição disponível.";
+            
+            const heroBody = hero.excerpt || parseContent(hero.content) || "Sem descrição disponível.";
+            document.getElementById('hero-excerpt').innerText = heroBody;
             
             if (hero.cover?.data) {
                 const imgUrl = `${STRAPI_URL}${hero.cover.data.attributes.url}`;
@@ -95,7 +109,8 @@
             grid.innerHTML = articles.map(article => {
                 const attr = article.attributes;
                 const imgUrl = attr.cover?.data ? `${STRAPI_URL}${attr.cover.data.attributes.url}` : 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400';
-                
+                const body = attr.excerpt || parseContent(attr.content) || "";
+
                 return `
                     <article class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-[#ffb400] transition-all group">
                         <div class="aspect-video overflow-hidden">
@@ -103,7 +118,7 @@
                         </div>
                         <div class="p-6">
                             <h4 class="text-xl font-bold mt-2 group-hover:text-[#ffb400] transition-colors">${attr.title || "Nova Notícia"}</h4>
-                            <p class="text-gray-400 text-sm mt-3 line-clamp-3">${attr.excerpt || attr.content || ""}</p>
+                            <p class="text-gray-400 text-sm mt-3 line-clamp-3">${body}</p>
                             <div class="mt-6 pt-6 border-t border-gray-800 flex items-center justify-between text-xs text-gray-500">
                                 <span>WebTech News</span>
                                 <span>${new Date(attr.createdAt).toLocaleDateString()}</span>
